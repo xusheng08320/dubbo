@@ -193,8 +193,9 @@ public class DefaultApplicationDeployer extends AbstractDeployer<ApplicationMode
                 return;
             }
             // register shutdown hook
+            // 注册关闭的钩子
             registerShutdownHook();
-
+            // 启动配置中心
             startConfigCenter();
 
             loadApplicationConfigs();

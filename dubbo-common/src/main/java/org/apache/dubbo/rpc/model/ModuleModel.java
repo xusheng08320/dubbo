@@ -40,8 +40,10 @@ public class ModuleModel extends ScopeModel {
 
     private final ApplicationModel applicationModel;
     private ModuleEnvironment moduleEnvironment;
+    // 服务仓储
     private ModuleServiceRepository serviceRepository;
     private ModuleConfigManager moduleConfigManager;
+    //
     private ModuleDeployer deployer;
 
     public ModuleModel(ApplicationModel applicationModel) {

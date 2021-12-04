@@ -571,6 +571,7 @@ public abstract class AbstractConfig implements Serializable {
         refreshed.set(true);
         try {
             // check and init before do refresh
+            // 空实现
             preProcessRefresh();
 
             Environment environment = getScopeModel().getModelEnvironment();

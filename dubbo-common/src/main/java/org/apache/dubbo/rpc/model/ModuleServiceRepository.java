@@ -39,16 +39,19 @@ public class ModuleServiceRepository {
 
     /**
      * services
+     * 一个service服务下多个方法
      */
     private ConcurrentMap<String, List<ServiceDescriptor>> services = new ConcurrentHashMap<>();
 
     /**
      * consumers ( key - group/interface:version value - consumerModel list)
+     * 服务消费方
      */
     private ConcurrentMap<String, List<ConsumerModel>> consumers = new ConcurrentHashMap<>();
 
     /**
      * providers
+     * 服务提供方
      */
     private final ConcurrentMap<String, ProviderModel> providers = new ConcurrentHashMap<>();
     private final FrameworkServiceRepository frameworkServiceRepository;

@@ -205,6 +205,7 @@ public class ServiceConfig<T> extends ServiceConfigBase<T> {
             ExtensionLoader<ServiceListener> extensionLoader = this.getExtensionLoader(ServiceListener.class);
             this.serviceListeners.addAll(extensionLoader.getSupportedExtensionInstances());
         }
+        // 初始化服务元数据
         initServiceMetadata(provider);
         serviceMetadata.setServiceType(getInterfaceClass());
         serviceMetadata.setTarget(getRef());
@@ -218,22 +219,26 @@ public class ServiceConfig<T> extends ServiceConfigBase<T> {
         }
 
         // ensure start module, compatible with old api usage
+        // 服务实例启动和初始化准备工作
         getScopeModel().getDeployer().start();
 
         synchronized (this) {
             if (this.exported) {
                 return;
             }
-
             if (!this.isRefreshed()) {
+                // 服务实例刷新
                 this.refresh();
             }
             if (this.shouldExport()) {
+                // 执行服务实例初始化工作
                 this.init();
 
                 if (shouldDelay()) {
+                    // 延迟发布，指定一段时间后再去进行服务发布
                     doDelayExport();
                 } else {
+                    // 核心对外发布流程
                     doExport();
                 }
             }
@@ -360,21 +365,26 @@ public class ServiceConfig<T> extends ServiceConfigBase<T> {
         if (StringUtils.isEmpty(path)) {
             path = interfaceName;
         }
+        // 服务发布
         doExportUrls();
+        // 服务发布完成
         exported();
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     private void doExportUrls() {
+        // dubbo将各个组件都集中在了ScopeModel=ModuleModel里面
+        // dubbo服务数据存储组件
         ModuleServiceRepository repository = getScopeModel().getServiceRepository();
         ServiceDescriptor serviceDescriptor = repository.registerService(getInterfaceClass());
+        // 服务提供者，provider
         providerModel = new ProviderModel(getUniqueServiceName(),
             ref,
             serviceDescriptor,
             this,
             getScopeModel(),
             serviceMetadata);
-
+        // 注册provider信息
         repository.registerProvider(providerModel);
 
         List<URL> registryURLs = ConfigValidationUtils.loadRegistries(this, true);
@@ -384,6 +394,7 @@ public class ServiceConfig<T> extends ServiceConfigBase<T> {
                     .map(p -> p + "/" + path)
                     .orElse(path), group, version);
             // In case user specified path, register service one more time to map it to path.
+            // 重点方法，真正像注册中心暴露服务
             repository.registerService(pathKey, interfaceClass);
             doExportUrlsFor1Protocol(protocolConfig, registryURLs);
         }
@@ -563,11 +574,13 @@ public class ServiceConfig<T> extends ServiceConfigBase<T> {
         if (!SCOPE_NONE.equalsIgnoreCase(scope)) {
 
             // export to local if the config is not remote (export to remote only when config is remote)
+            // 远程发布
             if (!SCOPE_REMOTE.equalsIgnoreCase(scope)) {
                 exportLocal(url);
             }
 
             // export to remote if the config is not local (export to local only when config is local)
+            // 本地发布
             if (!SCOPE_LOCAL.equalsIgnoreCase(scope)) {
                 url = exportRemote(url, registryURLs);
                 MetadataUtils.publishServiceDefinition(url);
