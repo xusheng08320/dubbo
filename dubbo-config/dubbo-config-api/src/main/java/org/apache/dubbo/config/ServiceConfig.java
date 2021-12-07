@@ -649,6 +649,7 @@ public class ServiceConfig<T> extends ServiceConfigBase<T> {
         if (withMetaData) {
             invoker = new DelegateProviderMetaDataInvoker(invoker, this);
         }
+        // inJvm，registryProtocol,dubboProtocol
         Exporter<?> exporter = protocolSPI.export(invoker);
         exporters.add(exporter);
     }
@@ -656,6 +657,7 @@ public class ServiceConfig<T> extends ServiceConfigBase<T> {
 
     /**
      * always export injvm
+     * 发布到本地
      */
     private void exportLocal(URL url) {
         URL local = URLBuilder.from(url)
