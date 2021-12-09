@@ -96,8 +96,9 @@ public class NettyServer extends AbstractServer {
     @Override
     protected void doOpen() throws Throwable {
         bootstrap = new ServerBootstrap();
-
+        // 负责对端口号监听是否有外部系统的连接请求的线程
         bossGroup = NettyEventLoopFactory.eventLoopGroup(1, EVENT_LOOP_BOSS_POOL_NAME);
+        // 发现了端口
         workerGroup = NettyEventLoopFactory.eventLoopGroup(
                 getUrl().getPositiveParameter(IO_THREADS_KEY, Constants.DEFAULT_IO_THREADS),
             EVENT_LOOP_WORKER_POOL_NAME);
