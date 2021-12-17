@@ -651,6 +651,7 @@ public class ServiceConfig<T> extends ServiceConfigBase<T> {
         }
         // inJvm，registryProtocol,dubboProtocol
         Exporter<?> exporter = protocolSPI.export(invoker);
+        // 服务发布，发布出去后外部可进行调用
         exporters.add(exporter);
     }
 
