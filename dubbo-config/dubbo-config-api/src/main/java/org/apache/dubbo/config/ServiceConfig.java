@@ -638,6 +638,7 @@ public class ServiceConfig<T> extends ServiceConfigBase<T> {
         return url;
     }
 
+    // 暴露服务
     @SuppressWarnings({"unchecked", "rawtypes"})
     private void doExportUrl(URL url, boolean withMetaData) {
         Invoker<?> invoker = proxyFactory.getInvoker(ref, (Class) interfaceClass, url);
