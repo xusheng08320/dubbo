@@ -262,7 +262,7 @@ public class ReferenceConfig<T> extends ReferenceConfigBase<T> {
         repository.registerConsumer(consumerModel);
 
         serviceMetadata.getAttachments().putAll(referenceParameters);
-
+        // 生成代理类
         ref = createProxy(referenceParameters);
 
         serviceMetadata.setTarget(ref);
@@ -273,6 +273,7 @@ public class ReferenceConfig<T> extends ReferenceConfigBase<T> {
 
         initialized = true;
 
+        // 校验invoker是否有效
         checkInvokerAvailable();
     }
 
