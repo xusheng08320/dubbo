@@ -310,7 +310,7 @@ public class DubboProtocol extends AbstractProtocol {
 
             }
         }
-
+        //
         openServer(url);
         optimizeSerialization(url);
 

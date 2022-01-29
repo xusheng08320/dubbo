@@ -234,7 +234,7 @@ public class DefaultApplicationDeployer extends AbstractDeployer<ApplicationMode
 
         // load config centers
         configManager.loadConfigsOfTypeFromProps(ConfigCenterConfig.class);
-
+        // 使用注册中心作为配置中心
         useRegistryAsConfigCenterIfNecessary();
 
         // check Config Center

@@ -221,6 +221,7 @@ public class ServiceConfig<T> extends ServiceConfigBase<T> {
             if (shouldDelay()) {
                 doDelayExport();
             } else {
+                // 1.export dubbo service 2.register dubbo service 3. start netty server
                 doExport();
             }
 
@@ -573,11 +574,13 @@ public class ServiceConfig<T> extends ServiceConfigBase<T> {
 
             // export to local if the config is not remote (export to remote only when config is remote)
             if (!SCOPE_REMOTE.equalsIgnoreCase(scope)) {
+                // 本地发布
                 exportLocal(url);
             }
 
             // export to remote if the config is not local (export to local only when config is local)
             if (!SCOPE_LOCAL.equalsIgnoreCase(scope)) {
+                // 远程发布
                 url = exportRemote(url, registryURLs);
                 MetadataUtils.publishServiceDefinition(url);
             }
@@ -641,6 +644,7 @@ public class ServiceConfig<T> extends ServiceConfigBase<T> {
     // 暴露服务
     @SuppressWarnings({"unchecked", "rawtypes"})
     private void doExportUrl(URL url, boolean withMetaData) {
+        // 生成invoker代理
         Invoker<?> invoker = proxyFactory.getInvoker(ref, (Class) interfaceClass, url);
         if (withMetaData) {
             invoker = new DelegateProviderMetaDataInvoker(invoker, this);
