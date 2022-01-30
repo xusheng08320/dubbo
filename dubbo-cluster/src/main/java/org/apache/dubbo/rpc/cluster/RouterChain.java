@@ -163,7 +163,7 @@ public class RouterChain<T> {
      * @param invocation
      * @return
      */
-    public List<Invoker<T>> ghhgbroute(URL url, Invocation invocation) {
+    public List<Invoker<T>> route(URL url, Invocation invocation) {
 
         AddrCache<T> cache = this.cache.get();
         List<Invoker<T>> finalInvokers = null;
