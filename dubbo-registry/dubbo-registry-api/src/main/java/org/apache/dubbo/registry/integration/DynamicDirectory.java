@@ -51,6 +51,9 @@ import static org.apache.dubbo.remoting.Constants.CHECK_KEY;
 
 /**
  * RegistryDirectory
+ * DynamicDirectory = RegistryDirectory
+ * 服务发现
+ * 目标服务实例集群、目标实例集群有变化，zk推送变化
  */
 public abstract class DynamicDirectory<T> extends AbstractDirectory<T> implements NotifyListener {
 
@@ -157,6 +160,7 @@ public abstract class DynamicDirectory<T> extends AbstractDirectory<T> implement
 
     public void subscribe(URL url) {
         setSubscribeUrl(url);
+        // 服务发现org.apache.dubbo.registry.ListenerRegistryWrapper.subscribe
         registry.subscribe(url, this);
     }
 
@@ -313,6 +317,9 @@ public abstract class DynamicDirectory<T> extends AbstractDirectory<T> implement
         }
     }
 
+    /**
+     * 服务变动监听器
+     */
     private volatile InvokersChangedListener invokersChangedListener;
     private volatile boolean invokersChanged;
 

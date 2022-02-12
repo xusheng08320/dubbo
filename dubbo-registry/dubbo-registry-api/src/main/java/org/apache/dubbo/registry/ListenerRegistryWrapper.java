@@ -106,6 +106,7 @@ public class ListenerRegistryWrapper implements Registry {
     public void subscribe(URL url, NotifyListener listener) {
         try {
             if (registry != null) {
+                // org.apache.dubbo.registry.client.ServiceDiscoveryRegistry.subscribe
                 registry.subscribe(url, listener);
             }
         } finally {
