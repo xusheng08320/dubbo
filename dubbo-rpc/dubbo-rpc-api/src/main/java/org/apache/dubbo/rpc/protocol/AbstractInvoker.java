@@ -173,9 +173,11 @@ public abstract class AbstractInvoker<T> implements Invoker<T> {
         prepareInvocation(invocation);
 
         // do invoke rpc invocation and return async result
+        // 执行并且获取返回结果，异步执行
         AsyncRpcResult asyncResult = doInvokeAndReturn(invocation);
 
         // wait rpc result if sync
+        // 同步等待结果，默认为异步
         waitForResultIfSync(asyncResult, invocation);
 
         return asyncResult;
@@ -253,6 +255,7 @@ public abstract class AbstractInvoker<T> implements Invoker<T> {
              */
             Object timeout = invocation.get(TIMEOUT_KEY);
             if (timeout instanceof Integer) {
+                // 同步等待获取返回结果
                 asyncResult.get((Integer) timeout, TimeUnit.MILLISECONDS);
             } else {
                 asyncResult.get(Integer.MAX_VALUE, TimeUnit.MILLISECONDS);

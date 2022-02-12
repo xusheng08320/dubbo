@@ -55,6 +55,7 @@ public class RandomLoadBalance extends AbstractLoadBalance {
         int length = invokers.size();
 
         if (!needWeightLoadBalance(invokers,invocation)){
+            // 随机负载均衡
             return invokers.get(ThreadLocalRandom.current().nextInt(length));
         }
 
