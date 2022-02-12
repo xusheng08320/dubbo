@@ -22,10 +22,15 @@ import org.apache.dubbo.config.RegistryConfig;
 import org.apache.dubbo.config.ServiceConfig;
 import org.apache.dubbo.config.bootstrap.DubboBootstrap;
 import org.apache.dubbo.demo.DemoService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.CountDownLatch;
 
 public class Application {
+
+    private static final Logger logger = LoggerFactory.getLogger(Application.class);
+
     public static void main(String[] args) throws Exception {
         if (isClassic(args)) {
             startWithExport();
@@ -60,7 +65,7 @@ public class Application {
         service.setMetadataReportConfig(new MetadataReportConfig("zookeeper://127.0.0.1:2181"));
         service.export();
 
-        System.out.println("dubbo service started");
+        logger.info("dubbo service started");
         new CountDownLatch(1).await();
     }
 }
