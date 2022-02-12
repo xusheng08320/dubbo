@@ -239,6 +239,7 @@ public class ReferenceConfig<T> extends ReferenceConfigBase<T> {
         }
 
         // prepare application for reference
+        // 创建zk客户端，并创建会话
         getScopeModel().getDeployer().prepare();
 
         if (!this.isRefreshed()) {

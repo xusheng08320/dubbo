@@ -16,6 +16,8 @@
  */
 package org.apache.dubbo.demo.consumer;
 
+import org.apache.dubbo.common.logger.Logger;
+import org.apache.dubbo.common.logger.LoggerFactory;
 import org.apache.dubbo.config.ApplicationConfig;
 import org.apache.dubbo.config.MetadataReportConfig;
 import org.apache.dubbo.config.ReferenceConfig;
@@ -25,6 +27,8 @@ import org.apache.dubbo.demo.DemoService;
 import org.apache.dubbo.rpc.service.GenericService;
 
 public class Application {
+    protected static final Logger logger = LoggerFactory.getLogger(Application.class);
+
     public static void main(String[] args) {
         if (isClassic(args)) {
             runWithRefer();
@@ -67,6 +71,6 @@ public class Application {
         reference.setInterface(DemoService.class);
         DemoService service = reference.get();
         String message = service.sayHello("dubbo");
-        System.out.println(message);
+        logger.info(message);
     }
 }
