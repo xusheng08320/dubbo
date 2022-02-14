@@ -96,6 +96,7 @@ public class FailbackClusterInvoker<T> extends AbstractClusterInvoker<T> {
 
     @Override
     protected Result doInvoke(Invocation invocation, List<Invoker<T>> invokers, LoadBalance loadbalance) throws RpcException {
+        // 失败后隔一段时间进行重试
         Invoker<T> invoker = null;
         URL consumerUrl = RpcContext.getServiceContext().getConsumerUrl();
         try {
@@ -103,10 +104,12 @@ public class FailbackClusterInvoker<T> extends AbstractClusterInvoker<T> {
             invoker = select(loadbalance, invocation, invokers, null);
             // Asynchronous call method must be used here, because failback will retry in the background.
             // Then the serviceContext will be cleared after the call is completed.
+            // 异步调用
             return invokeWithContextAsync(invoker, invocation, consumerUrl);
         } catch (Throwable e) {
             logger.error("Failback to invoke method " + invocation.getMethodName() + ", wait for retry in background. Ignored exception: "
                 + e.getMessage() + ", ", e);
+            // 失败重试
             if (retries > 0) {
                 addFailed(loadbalance, invocation, invokers, invoker, consumerUrl);
             }

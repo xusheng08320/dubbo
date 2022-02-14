@@ -44,6 +44,7 @@ public class FailsafeClusterInvoker<T> extends AbstractClusterInvoker<T> {
 
     @Override
     public Result doInvoke(Invocation invocation, List<Invoker<T>> invokers, LoadBalance loadbalance) throws RpcException {
+        // 失败后记录日志，不抛出异常。比如rpc记录日志，审计数据
         try {
             checkInvokers(invokers, invocation);
             Invoker<T> invoker = select(loadbalance, invocation, invokers, null);

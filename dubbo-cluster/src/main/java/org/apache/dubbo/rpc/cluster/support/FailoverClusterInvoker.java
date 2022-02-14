@@ -56,6 +56,7 @@ public class FailoverClusterInvoker<T> extends AbstractClusterInvoker<T> {
     @SuppressWarnings({"unchecked", "rawtypes"})
     public Result doInvoke(Invocation invocation, final List<Invoker<T>> invokers, LoadBalance loadbalance) throws RpcException {
         List<Invoker<T>> copyInvokers = invokers;
+        // 判断invokers是否为空
         checkInvokers(copyInvokers, invocation);
         String methodName = RpcUtils.getMethodName(invocation);
         // 计算调用次数，重试使用
@@ -67,9 +68,10 @@ public class FailoverClusterInvoker<T> extends AbstractClusterInvoker<T> {
         for (int i = 0; i < len; i++) {
             //Reselect before retry to avoid a change of candidate `invokers`.
             //NOTE: if `invokers` changed, then `invoked` also lose accuracy.
+            // i > 0 第一次调用失败
             if (i > 0) {
                 checkWhetherDestroyed();
-                // 根据路由规则获取所有的可调用的invoker
+                // 根据路由规则获取所有的可调用的invoker，调用dynamic directory进行invokers列表刷新
                 copyInvokers = list(invocation);
                 // check again
                 checkInvokers(copyInvokers, invocation);
@@ -115,6 +117,7 @@ public class FailoverClusterInvoker<T> extends AbstractClusterInvoker<T> {
     }
 
     private int calculateInvokeTimes(String methodName) {
+        // 第一次调用失败，那么发起2次重试
         int len = getUrl().getMethodParameter(methodName, RETRIES_KEY, DEFAULT_RETRIES) + 1;
         RpcContext rpcContext = RpcContext.getClientAttachment();
         Object retry = rpcContext.getObjectAttachment(RETRIES_KEY);
