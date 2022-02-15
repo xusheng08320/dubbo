@@ -86,6 +86,7 @@ public class MockClusterInvoker<T> implements ClusterInvoker<T> {
 
     @Override
     public Result invoke(Invocation invocation) throws RpcException {
+        // mock，模拟调用。如果provider故障，调用本地mock返回默认结果
         Result result;
 
         String value = getUrl().getMethodParameter(invocation.getMethodName(), MOCK_KEY, Boolean.FALSE.toString()).trim();
