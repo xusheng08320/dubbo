@@ -88,6 +88,7 @@ public class RoundRobinLoadBalance extends AbstractLoadBalance {
 
     @Override
     protected <T> Invoker<T> doSelect(List<Invoker<T>> invokers, URL url, Invocation invocation) {
+        // 轮询，也会基于权重进行计算
         String key = invokers.get(0).getUrl().getServiceKey() + "." + invocation.getMethodName();
         ConcurrentMap<String, WeightedRoundRobin> map = methodWeightMap.computeIfAbsent(key, k -> new ConcurrentHashMap<>());
         int totalWeight = 0;

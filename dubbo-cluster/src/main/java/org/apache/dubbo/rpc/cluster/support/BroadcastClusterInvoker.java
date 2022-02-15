@@ -46,6 +46,7 @@ public class BroadcastClusterInvoker<T> extends AbstractClusterInvoker<T> {
     @Override
     @SuppressWarnings({"unchecked", "rawtypes"})
     public Result doInvoke(final Invocation invocation, List<Invoker<T>> invokers, LoadBalance loadbalance) throws RpcException {
+        // 广播素有服务实例
         checkInvokers(invokers, invocation);
         RpcContext.getServiceContext().setInvokers((List) invokers);
         RpcException exception = null;
@@ -54,6 +55,7 @@ public class BroadcastClusterInvoker<T> extends AbstractClusterInvoker<T> {
         // The value range of broadcast.fail.threshold must be 0～100.
         // 100 means that an exception will be thrown last, and 0 means that as long as an exception occurs, it will be thrown.
         // see https://github.com/apache/dubbo/pull/7174
+        // 失败容忍度
         int broadcastFailPercent = url.getParameter(BROADCAST_FAIL_PERCENT_KEY, MAX_BROADCAST_FAIL_PERCENT);
 
         if (broadcastFailPercent < MIN_BROADCAST_FAIL_PERCENT || broadcastFailPercent > MAX_BROADCAST_FAIL_PERCENT) {

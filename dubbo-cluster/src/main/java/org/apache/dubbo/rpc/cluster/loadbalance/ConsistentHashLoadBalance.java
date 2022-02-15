@@ -48,6 +48,7 @@ public class ConsistentHashLoadBalance extends AbstractLoadBalance {
     @SuppressWarnings("unchecked")
     @Override
     protected <T> Invoker<T> doSelect(List<Invoker<T>> invokers, URL url, Invocation invocation) {
+        // 一致性hash算法
         String methodName = RpcUtils.getMethodName(invocation);
         String key = invokers.get(0).getUrl().getServiceKey() + "." + methodName;
         // using the hashcode of list to compute the hash only pay attention to the elements in the list

@@ -62,6 +62,7 @@ public class ForkingClusterInvoker<T> extends AbstractClusterInvoker<T> {
     @Override
     @SuppressWarnings({"unchecked", "rawtypes"})
     public Result doInvoke(final Invocation invocation, List<Invoker<T>> invokers, LoadBalance loadbalance) throws RpcException {
+        // 并行调用，取最先返回的结果
         try {
             checkInvokers(invokers, invocation);
             final List<Invoker<T>> selected;
