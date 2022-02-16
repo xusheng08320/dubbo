@@ -106,6 +106,7 @@ public class DubboInvoker<T> extends AbstractInvoker<T> {
                 currentClient.send(inv, isSent);
                 return AsyncRpcResult.newDefaultAsyncResult(invocation);
             } else {
+                // 异步调用
                 ExecutorService executor = getCallbackExecutor(getUrl(), inv);
                 // 真正执行rpc请求
                 CompletableFuture<AppResponse> appResponseFuture =

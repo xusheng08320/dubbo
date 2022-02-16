@@ -101,6 +101,7 @@ public abstract class AbstractRegistry implements Registry {
         localCacheEnabled = url.getParameter(REGISTRY_LOCAL_FILE_CACHE_ENABLED, true);
         registryCacheExecutor = url.getOrDefaultApplicationModel().getDefaultExtension(ExecutorRepository.class).getSharedExecutor();
         if (localCacheEnabled) {
+            // 如果本地缓存支持，会进行磁盘持久化
             // Start file save timer
             syncSaveFile = url.getParameter(REGISTRY_FILESAVE_SYNC_KEY, false);
             String defaultFilename = System.getProperty(USER_HOME) + DUBBO_REGISTRY +
@@ -177,6 +178,7 @@ public abstract class AbstractRegistry implements Registry {
         }
         // Save
         try {
+            // 磁盘文件锁
             File lockfile = new File(file.getAbsolutePath() + ".lock");
             if (!lockfile.exists()) {
                 lockfile.createNewFile();
