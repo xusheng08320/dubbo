@@ -707,8 +707,11 @@ public class ExtensionLoader<T> {
             if (instance == null) {
                 extensionInstances.putIfAbsent(clazz, createExtensionInstance(clazz));
                 instance = (T) extensionInstances.get(clazz);
+                // 初始化之前
                 instance = postProcessBeforeInitialization(instance, name);
+                // 依赖注入
                 injectExtension(instance);
+                // 初始化之后
                 instance = postProcessAfterInitialization(instance, name);
             }
 
@@ -733,6 +736,7 @@ public class ExtensionLoader<T> {
             }
 
             // Warning: After an instance of Lifecycle is wrapped by cachedWrapperClasses, it may not still be Lifecycle instance, this application may not invoke the lifecycle.initialize hook.
+            // 生命周期
             initExtension(instance);
             return instance;
         } catch (Throwable t) {
@@ -857,7 +861,7 @@ public class ExtensionLoader<T> {
             synchronized (cachedClasses) {
                 classes = cachedClasses.get();
                 if (classes == null) {
-                    // 寻找Juinextension classes
+                    // 寻找extension classes
                     classes = loadExtensionClasses();
                     cachedClasses.set(classes);
                 }
@@ -924,6 +928,7 @@ public class ExtensionLoader<T> {
     private void loadDirectory(Map<String, Class<?>> extensionClasses, String dir, String type,
                                boolean extensionLoaderClassLoaderFirst, boolean overridden,
                                String[] excludedPackages, String[] onlyExtensionClassLoaderPackages) {
+        // 目录+接口名
         String fileName = dir + type;
         try {
             List<ClassLoader> classLoadersToLoad = new LinkedList<>();
