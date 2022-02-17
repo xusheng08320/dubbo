@@ -741,6 +741,13 @@ public class ExtensionLoader<T> {
         return compiler.compile(code, classLoader);
     }
 
+    /**
+     * 生成扩展工厂类
+     * 根据URL中的protocol生成扩展类
+     * 先从参数列表中获取为URL类型的参数
+     * 如果参数中没有URL类型的，就从参数中寻找有getUrl方法的
+     * @return
+     */
     private String createAdaptiveExtensionClassCode() {
         StringBuilder codeBuilder = new StringBuilder();
         Method[] methods = type.getMethods();
