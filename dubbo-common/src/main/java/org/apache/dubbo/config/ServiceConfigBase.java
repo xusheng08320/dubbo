@@ -198,6 +198,7 @@ public abstract class ServiceConfigBase<T> extends AbstractServiceConfig {
     }
 
     public void completeCompoundConfigs() {
+        // 完成配置信息
         if (provider != null) {
             if (application == null) {
                 setApplication(provider.getApplication());
