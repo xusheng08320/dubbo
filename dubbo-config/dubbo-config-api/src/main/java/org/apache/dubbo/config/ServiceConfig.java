@@ -213,7 +213,7 @@ public class ServiceConfig<T> extends ServiceConfigBase<T> {
             }
             bootstrap.initialize();
         }
-
+        // 补全各种配置属性
         checkAndUpdateSubConfigs();
 
         initServiceMetadata(provider);
@@ -269,6 +269,7 @@ public class ServiceConfig<T> extends ServiceConfigBase<T> {
         if (!isOnlyInJvm()) {
             checkRegistry();
         }
+        // 刷新serviceConfig
         this.refresh();
 
         if (StringUtils.isEmpty(interfaceName)) {
@@ -448,7 +449,7 @@ public class ServiceConfig<T> extends ServiceConfigBase<T> {
         if (ConfigUtils.isEmpty(token) && provider != null) {
             token = provider.getToken();
         }
-
+        // 服务可以配置token，可以通过tokenFilter进行过滤
         if (!ConfigUtils.isEmpty(token)) {
             if (ConfigUtils.isDefault(token)) {
                 map.put(TOKEN_KEY, UUID.randomUUID().toString());
@@ -513,6 +514,7 @@ public class ServiceConfig<T> extends ServiceConfigBase<T> {
 
                         Invoker<?> invoker = PROXY_FACTORY.getInvoker(ref, (Class) interfaceClass,
                                 registryURL.addParameterAndEncoded(EXPORT_KEY, url.toFullString()));
+                        // 表示服务提供者，包括了Inboker和服务的配置
                         DelegateProviderMetaDataInvoker wrapperInvoker = new DelegateProviderMetaDataInvoker(invoker, this);
 
                         Exporter<?> exporter = PROTOCOL.export(wrapperInvoker);
