@@ -188,7 +188,7 @@ public class ServiceConfig<T> extends ServiceConfigBase<T> {
             bootstrap = DubboBootstrap.getInstance();
             bootstrap.init();
         }
-
+        // 获取服务最新最全的配置
         checkAndUpdateSubConfigs();
 
         //init serviceMetadata
@@ -208,6 +208,7 @@ public class ServiceConfig<T> extends ServiceConfigBase<T> {
 
     private void checkAndUpdateSubConfigs() {
         // Use default configs defined explicitly with global scope
+        // 补全ServiceConfig中的属性
         completeCompoundConfigs();
         checkDefault();
         checkProtocol();

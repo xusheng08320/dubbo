@@ -36,6 +36,7 @@ public class DubboLifecycleComponentRegistrar implements ImportBeanDefinitionReg
     @Override
     public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
         registerBeans(registry, DubboLifecycleComponentApplicationListener.class);
+        // 监听容器事件
         registerBeans(registry, DubboBootstrapApplicationListener.class);
     }
 }

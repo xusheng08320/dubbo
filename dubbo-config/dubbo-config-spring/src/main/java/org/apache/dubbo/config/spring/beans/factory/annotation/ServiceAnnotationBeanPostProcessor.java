@@ -153,6 +153,7 @@ public class ServiceAnnotationBeanPostProcessor implements BeanDefinitionRegistr
         for (String packageToScan : packagesToScan) {
 
             // Registers @Service Bean first
+            // 先在spring容器中注册bean
             scanner.scan(packageToScan);
 
             // Finds all BeanDefinitionHolders of @Service whether @ComponentScan scans or not.
@@ -162,6 +163,7 @@ public class ServiceAnnotationBeanPostProcessor implements BeanDefinitionRegistr
             if (!CollectionUtils.isEmpty(beanDefinitionHolders)) {
 
                 for (BeanDefinitionHolder beanDefinitionHolder : beanDefinitionHolders) {
+                    // 注册ServcieBean
                     registerServiceBean(beanDefinitionHolder, registry, scanner);
                 }
 

@@ -120,6 +120,16 @@ public class ReferenceAnnotationBeanPostProcessor extends AbstractAnnotationBean
         return Collections.unmodifiableMap(injectedMethodReferenceBeanCache);
     }
 
+    /**
+     * 处理@Reference注解
+     * @param attributes
+     * @param bean
+     * @param beanName
+     * @param injectedType
+     * @param injectedElement
+     * @return
+     * @throws Exception
+     */
     @Override
     protected Object doGetInjectedBean(AnnotationAttributes attributes, Object bean, String beanName, Class<?> injectedType,
                                        InjectionMetadata.InjectedElement injectedElement) throws Exception {
@@ -158,7 +168,7 @@ public class ReferenceAnnotationBeanPostProcessor extends AbstractAnnotationBean
         ConfigurableListableBeanFactory beanFactory = getBeanFactory();
 
         String beanName = getReferenceBeanName(attributes, interfaceClass);
-
+        // 如果是本地调用，直接使用容器中的
         if (existsServiceBean(referencedBeanName)) { // If @Service bean is local one
             /**
              * Get  the @Service's BeanDefinition from {@link BeanFactory}
