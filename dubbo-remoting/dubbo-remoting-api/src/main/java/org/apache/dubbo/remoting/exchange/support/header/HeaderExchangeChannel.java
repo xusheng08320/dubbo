@@ -84,6 +84,7 @@ final class HeaderExchangeChannel implements ExchangeChannel {
 
     @Override
     public void send(Object message) throws RemotingException {
+        // 消费者发送请求
         send(message, false);
     }
 

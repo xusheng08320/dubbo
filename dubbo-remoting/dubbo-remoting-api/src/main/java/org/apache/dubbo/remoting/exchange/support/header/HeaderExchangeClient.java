@@ -61,6 +61,7 @@ public class HeaderExchangeClient implements ExchangeClient {
         if (startTimer) {
             URL url = client.getUrl();
             startReconnectTask(url);
+            // 启动心跳
             startHeartBeatTask(url);
         }
     }

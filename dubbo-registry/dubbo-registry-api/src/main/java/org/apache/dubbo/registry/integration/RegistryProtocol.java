@@ -418,10 +418,12 @@ public class RegistryProtocol implements Protocol {
             directory.setRegisteredConsumerUrl(getRegisteredConsumerUrl(subscribeUrl, url));
             registry.register(directory.getRegisteredConsumerUrl());
         }
+        // 构建服务路由链，可以过滤某些服务提供者
         directory.buildRouterChain(subscribeUrl);
+        // 订阅路径
         directory.subscribe(subscribeUrl.addParameter(CATEGORY_KEY,
                 PROVIDERS_CATEGORY + "," + CONFIGURATORS_CATEGORY + "," + ROUTERS_CATEGORY));
-
+        // 获取invoker，MockClusterWrapper
         Invoker invoker = cluster.join(directory);
         return invoker;
     }

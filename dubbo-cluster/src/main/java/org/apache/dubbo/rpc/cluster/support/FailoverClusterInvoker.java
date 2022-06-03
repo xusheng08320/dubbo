@@ -63,8 +63,10 @@ public class FailoverClusterInvoker<T> extends AbstractClusterInvoker<T> {
             len = 1;
         }
         // retry loop.
+        // 记录上一次失败的exception
         RpcException le = null; // last exception.
         List<Invoker<T>> invoked = new ArrayList<Invoker<T>>(copyInvokers.size()); // invoked invokers.
+        // 记录上次调用的provider的地址
         Set<String> providers = new HashSet<String>(len);
         for (int i = 0; i < len; i++) {
             //Reselect before retry to avoid a change of candidate `invokers`.
