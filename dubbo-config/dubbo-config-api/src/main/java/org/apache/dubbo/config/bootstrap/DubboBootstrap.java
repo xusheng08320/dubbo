@@ -504,7 +504,7 @@ public class DubboBootstrap extends GenericEventListener {
         ApplicationModel.iniFrameworkExts();
 
         startConfigCenter();
-
+        // 链接zookeeper
         useRegistryAsConfigCenterIfNecessary();
 
         startMetadataReport();
