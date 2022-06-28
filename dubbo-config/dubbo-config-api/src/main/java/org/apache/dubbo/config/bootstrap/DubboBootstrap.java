@@ -700,6 +700,7 @@ public class DubboBootstrap extends GenericEventListener {
                 logger.info(NAME + " is starting...");
             }
             // 1. export Dubbo Services
+            // 注册消费者服务
             exportServices();
 
             // Not only provider register

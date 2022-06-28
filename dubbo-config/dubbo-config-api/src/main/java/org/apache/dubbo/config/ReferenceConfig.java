@@ -262,7 +262,7 @@ public class ReferenceConfig<T> extends ReferenceConfigBase<T> {
                 this,
                 null,
                 serviceMetadata);
-        // 根据参数构建道理对象
+        // 根据参数构建代理对象
         ref = createProxy(map);
 
         serviceMetadata.setTarget(ref);

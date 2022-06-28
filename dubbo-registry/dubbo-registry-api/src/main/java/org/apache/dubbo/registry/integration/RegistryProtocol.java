@@ -211,6 +211,7 @@ public class RegistryProtocol implements Protocol {
         // decide if we need to delay publish
         boolean register = providerUrl.getParameter(REGISTER_KEY, true);
         if (register) {
+            // 向注册中心注册dubbo服务
             register(registryUrl, registeredProviderUrl);
         }
 

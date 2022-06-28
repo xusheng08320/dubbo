@@ -36,8 +36,8 @@ public class Application {
                 .registry(new RegistryConfig("zookeeper://127.0.0.1:2181"))
                 .reference(reference)
                 .start();
-
-        String message = ReferenceConfigCache.getCache().get(reference).sayHello("dubbo");
+        DemoService demoService = ReferenceConfigCache.getCache().get(reference);
+        String message = demoService.sayHello("dubbo");
         System.out.println(message);
     }
 }
