@@ -23,12 +23,26 @@ import org.apache.dubbo.config.RegistryConfig;
 import org.apache.dubbo.config.ServiceConfig;
 import org.apache.dubbo.config.bootstrap.DubboBootstrap;
 import org.apache.dubbo.demo.DemoService;
+import org.apache.dubbo.demo.MyDemoService;
 
 public class Application {
-    public static void main(String[] args) throws Exception {
+    /*public static void main(String[] args) throws Exception {
         ServiceConfig<DemoServiceImpl> service = new ServiceConfig<>();
         service.setInterface(DemoService.class);
         service.setRef(new DemoServiceImpl());
+
+        DubboBootstrap bootstrap = DubboBootstrap.getInstance();
+        bootstrap
+                .application(new ApplicationConfig("dubbo-demo-api-provider"))
+                .registry(new RegistryConfig("zookeeper://127.0.0.1:2181"))
+                .service(service)
+                .start()
+                .await();
+    }*/
+    public static void main(String[] args) throws Exception {
+        ServiceConfig<MyDemoServiceImpl> service = new ServiceConfig<>();
+        service.setInterface(MyDemoService.class);
+        service.setRef(new MyDemoServiceImpl());
 
         DubboBootstrap bootstrap = DubboBootstrap.getInstance();
         bootstrap

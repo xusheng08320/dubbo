@@ -24,9 +24,10 @@ import org.apache.dubbo.config.RegistryConfig;
 import org.apache.dubbo.config.bootstrap.DubboBootstrap;
 import org.apache.dubbo.config.utils.ReferenceConfigCache;
 import org.apache.dubbo.demo.DemoService;
+import org.apache.dubbo.demo.MyDemoService;
 
 public class Application {
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         ReferenceConfig<DemoService> reference = new ReferenceConfig<>();
         reference.setInterface(DemoService.class);
 
@@ -38,6 +39,21 @@ public class Application {
                 .start();
         DemoService demoService = ReferenceConfigCache.getCache().get(reference);
         String message = demoService.sayHello("dubbo");
+        System.out.println(message);
+    }*/
+    public static void main(String[] args) {
+        ReferenceConfig<MyDemoService> reference = new ReferenceConfig<>();
+        reference.setInterface(MyDemoService.class);
+
+        DubboBootstrap bootstrap = DubboBootstrap.getInstance();
+        bootstrap
+                .application(new ApplicationConfig("dubbo-demo-api-consumer"))
+                .registry(new RegistryConfig("zookeeper://127.0.0.1:2181"))
+                .reference(reference)
+                .start();
+        MyDemoService demoService = ReferenceConfigCache.getCache().get(reference);
+        String message = demoService.sayHello("dubbo");
+        String re = demoService.sayHello(1);
         System.out.println(message);
     }
 }
