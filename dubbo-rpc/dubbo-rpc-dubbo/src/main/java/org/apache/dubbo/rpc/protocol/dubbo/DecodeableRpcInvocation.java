@@ -98,17 +98,17 @@ public class DecodeableRpcInvocation extends RpcInvocation implements Codec, Dec
     public Object decode(Channel channel, InputStream input) throws IOException {
         ObjectInput in = CodecSupport.getSerialization(channel.getUrl(), serializationType)
                 .deserialize(channel.getUrl(), input);
-
+        // 获取dubbo version
         String dubboVersion = in.readUTF();
         request.setVersion(dubboVersion);
         setAttachment(DUBBO_VERSION_KEY, dubboVersion);
-
+        // 获取path
         String path = in.readUTF();
         setAttachment(PATH_KEY, path);
         setAttachment(VERSION_KEY, in.readUTF());
-
+        // 方法名
         setMethodName(in.readUTF());
-
+        // 参数类型
         String desc = in.readUTF();
         setParameterTypesDesc(desc);
 
@@ -160,7 +160,7 @@ public class DecodeableRpcInvocation extends RpcInvocation implements Codec, Dec
             for (int i = 0; i < args.length; i++) {
                 args[i] = decodeInvocationArgument(channel, this, pts, i, args[i]);
             }
-
+            // 设置参数列表
             setArguments(args);
             String targetServiceName = buildKey((String) getAttachment(PATH_KEY),
                     getAttachment(GROUP_KEY),
