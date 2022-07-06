@@ -112,7 +112,7 @@ public abstract class Wrapper {
         if (c == Object.class) {
             return OBJECT_WRAPPER;
         }
-
+        // 创建代理对象
         return WRAPPER_MAP.computeIfAbsent(c, key -> makeWrapper(key));
     }
 

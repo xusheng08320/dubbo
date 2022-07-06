@@ -53,7 +53,7 @@ public class Application {
                 .start();
         MyDemoService demoService = ReferenceConfigCache.getCache().get(reference);
         String message = demoService.sayHello("dubbo");
-        String re = demoService.sayHello(1);
+        String result = demoService.sayHello(1);
         System.out.println(message);
     }
 }
