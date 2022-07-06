@@ -66,6 +66,7 @@ public class LeastActiveLoadBalance extends AbstractLoadBalance {
             // save for later use
             weights[i] = afterWarmup;
             // If it is the first invoker or the active number of the invoker is less than the current least active number
+            // 第一个invoker或当前活跃数比最小活跃数小，则重置计数器，并将leastIndexes数组的第一个元素设置为invoker下标
             if (leastActive == -1 || active < leastActive) {
                 // Reset the active number of the current invoker to the least active number
                 leastActive = active;
@@ -80,6 +81,7 @@ public class LeastActiveLoadBalance extends AbstractLoadBalance {
                 // Each invoke has the same weight (only one invoker here)
                 sameWeight = true;
                 // If current invoker's active value equals with leaseActive, then accumulating.
+                // 如果当前活跃数和最小活跃数一致，则往leastIndexes数组中添加元素，并累加leastCount计数器
             } else if (active == leastActive) {
                 // Record the index of the least active invoker in leastIndexes order
                 leastIndexes[leastCount++] = i;
