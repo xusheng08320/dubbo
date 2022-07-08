@@ -48,7 +48,7 @@ public class YamlPropertySourceFactory extends YamlProcessor implements Property
 
     @Override
     protected Yaml createYaml() {
-        return new Yaml(new StrictMapAppenderConstructor(), new Representer(),
+        /*return new Yaml(new StrictMapAppenderConstructor(), new Representer(),
                 new DumperOptions(), new Resolver() {
             @Override
             public void addImplicitResolver(Tag tag, Pattern regexp,
@@ -58,7 +58,8 @@ public class YamlPropertySourceFactory extends YamlProcessor implements Property
                 }
                 super.addImplicitResolver(tag, regexp, first);
             }
-        });
+        });*/
+        return null;
     }
 
     public Map<String, Object> process() {

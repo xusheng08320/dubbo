@@ -54,6 +54,7 @@ public abstract class AbstractLoadBalance implements LoadBalance {
         if (CollectionUtils.isEmpty(invokers)) {
             return null;
         }
+
         if (invokers.size() == 1) {
             return invokers.get(0);
         }
