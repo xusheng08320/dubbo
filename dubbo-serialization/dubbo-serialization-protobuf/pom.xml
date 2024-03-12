@@ -62,7 +62,7 @@ limitations under the License.
                 <version>0.5.1</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <protocArtifact>com.google.protobuf:protoc:3.7.1:exe:${os.detected.classifier}</protocArtifact>
+                    <protocArtifact>com.google.protobuf:protoc:3.7.1:exe:osx-x86_64</protocArtifact>
                     <outputDirectory>build/generated/source/proto/main/java</outputDirectory>
                     <clearOutputDirectory>false</clearOutputDirectory>
                 </configuration>
